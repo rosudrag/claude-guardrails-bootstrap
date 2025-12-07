@@ -83,6 +83,92 @@ Look for:
 - `.claude/` - Already has Claude Code config
 - `docs/adrs/` - Already has ADR structure
 
+### 5b. Discover Existing Documentation [AUTO] ⚠️ CRITICAL
+
+**This step is essential.** Projects may already have AI documentation in non-standard locations. Skipping this leads to creating redundant docs that duplicate existing content.
+
+Check these locations for existing AI/Claude documentation:
+
+| Location | What to look for |
+|----------|------------------|
+| `docs/` | Any `.md` files with AI-related content |
+| `docs/ai-includes/` | Guide organization (common pattern) |
+| `docs/ai/` | Alternative AI docs location |
+| `docs/claude/` | Claude-specific docs |
+| `.claude/docs/` | Claude Code docs location |
+| `claude-docs/` | Standard Praxis location |
+| Root `*.md` files | README sections about AI assistance |
+
+**For each discovered docs directory:**
+
+1. **List all markdown files** - Record filenames and line counts
+2. **Categorize by purpose** - Map to Praxis guide types:
+   - TDD/testing guides → `tdd-enforcement.md` equivalent
+   - Security guides → `security.md` equivalent
+   - Architecture guides → relates to ADRs
+   - Problem-solving guides → `iterative-problem-solving.md` equivalent
+   - Code quality guides → `code-quality.md` equivalent
+3. **Assess quality** - Check if guides are comprehensive:
+   - Line count (>100 lines usually indicates effort)
+   - Project-specific examples (not generic)
+   - Cross-references to other docs
+4. **Compare to Praxis templates** - Are existing guides better, worse, or different?
+
+**Quality assessment criteria:**
+
+| Quality | Indicators |
+|---------|------------|
+| **Excellent** | 5+ guides, >200KB total, cross-references, project-specific examples, hypothesis-driven TDD |
+| **Good** | 3-5 guides, >50KB total, some customization |
+| **Basic** | 1-2 guides or generic content |
+| **Missing** | No AI documentation found |
+
+**Record in analysis.json:**
+
+```json
+"documentation_inventory": {
+  "claude_md": {
+    "path": "CLAUDE.md",
+    "lines": 200,
+    "quality": "excellent|good|basic|missing",
+    "coverage": ["build_commands", "architecture", "constraints", ...]
+  },
+  "ai_docs_directory": {
+    "path": "docs/ai-includes/",
+    "files": 8,
+    "total_lines": 2700,
+    "guides": [
+      {"name": "tdd-enforcement.md", "lines": 314, "has_hypothesis_tdd": false},
+      {"name": "testing-guide.md", "lines": 450, "project_specific": true},
+      ...
+    ]
+  },
+  "adrs": {
+    "path": "docs/adrs/",
+    "count": 9,
+    "has_template": true,
+    "has_index": true
+  }
+},
+"comparison_to_praxis": {
+  "claude_md_quality": "exceeds_template|matches_template|below_template",
+  "guide_coverage": "exceeds_template|matches_template|below_template",
+  "gaps_identified": ["hypothesis_tdd", "security", "iterative_problem_solving"],
+  "recommendation": "enhance_existing|create_new|no_changes_needed"
+}
+```
+
+**⚠️ CRITICAL DECISION**: Based on documentation inventory:
+
+| Existing Docs Quality | Recommendation | Action |
+|----------------------|----------------|--------|
+| **Excellent** | `enhance_existing` | DON'T create `claude-docs/`. Enhance existing guides in place. |
+| **Good** | `enhance_existing` | DON'T create `claude-docs/`. Add missing guides to existing location. |
+| **Basic** | `create_new` | Create `claude-docs/` OR enhance existing location (user choice). |
+| **Missing** | `create_new` | Create `claude-docs/` with all Praxis guides. |
+
+**This affects procedure 04-generate-docs.md behavior.**
+
 ---
 
 ## Phase B: Deep Discovery
