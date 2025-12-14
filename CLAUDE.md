@@ -15,11 +15,31 @@ claude-praxis/
 ├── CLAUDE.md                    # You are here (meta instructions)
 ├── README.md                    # Human documentation
 └── bootstrap/
-    ├── CLAUDE.md                # Main entry point for bootstrapping
-    ├── procedures/              # Step-by-step procedures Claude follows
-    ├── templates/               # File templates for generated content
+    ├── CLAUDE.md                # Entry point router (mode selection)
+    ├── .state/                  # Environment setup state
+    │   ├── .gitkeep
+    │   └── environment-state.template.json
+    ├── environment/             # Mode 1: Environment setup (global tools)
+    │   ├── CLAUDE.md           # Environment orchestrator
+    │   └── procedures/
+    │       ├── 01-install-serena.md
+    │       ├── 02-install-mcp-servers.md
+    │       └── 03-install-agents.md
+    ├── project/                 # Mode 2: Project bootstrap (project files)
+    │   ├── CLAUDE.md           # Project orchestrator
+    │   ├── procedures/
+    │   │   ├── 00-analyze-project.md
+    │   │   ├── 01-generate-claude-md.md
+    │   │   ├── 02-generate-docs.md
+    │   │   └── 03-setup-adrs.md
+    │   └── verification.md      # Post-bootstrap verification
+    ├── templates/               # Shared templates for both modes
+    │   ├── CLAUDE.md.template
+    │   ├── adr-template.md
     │   └── guides/              # Guide templates (TDD, code quality, etc.)
-    └── reference/               # Background knowledge and principles
+    └── reference/               # Shared reference docs
+        ├── guardrail-principles.md
+        └── serena-best-practices.md
 ```
 
 ## Development Guidelines
@@ -36,10 +56,14 @@ claude-praxis/
 - Mark user-preservable sections with `<!-- USER_SECTION_START -->` / `<!-- USER_SECTION_END -->`
 
 ### When Adding New Features
-1. Update the relevant procedure in `/bootstrap/procedures/`
+1. Determine which mode it affects:
+   - Environment setup → `/bootstrap/environment/procedures/`
+   - Project bootstrap → `/bootstrap/project/procedures/`
+   - Both → update relevant orchestrators
 2. Add any new templates to `/bootstrap/templates/`
-3. Update `/bootstrap/CLAUDE.md` if the bootstrapping flow changes
-4. Update this file if the repo structure changes
+3. Update the appropriate orchestrator (environment/CLAUDE.md or project/CLAUDE.md)
+4. Update `/bootstrap/CLAUDE.md` if mode routing logic changes
+5. Update this file if the repo structure changes
 
 ## Testing Changes
 

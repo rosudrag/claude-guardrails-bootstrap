@@ -1,139 +1,255 @@
-# Claude Praxis - Execution Instructions
+# Claude Praxis Bootstrap - Entry Point
 
 You are reading this because a user has asked you to bootstrap their project with Claude Praxis.
 
-## Your Mission
+## Welcome to Claude Praxis
 
-Transform the user's project into a praxis-enabled codebase by:
-1. Installing semantic code tools (Serena MCP)
-2. Installing essential MCP servers (Context7 for docs, Sequential Thinking for reasoning)
-3. Installing specialized agents for their tech stack
-4. Generating customized CLAUDE.md and supporting docs
-5. Setting up architecture decision records (ADRs)
+This bootstrap has two distinct modes:
+
+1. **Environment Setup** (once per machine): Installs global tools (Serena MCP, Context7, Sequential Thinking, agents)
+2. **Project Bootstrap** (once per project): Sets up project-specific files (CLAUDE.md, docs, ADRs)
 
 ---
 
-## Behavioral Constraints
+## Automatic Mode Detection
 
-### File System Boundaries
+[AUTO] Checking your environment status...
 
-**SAFE LIST - You MAY create or modify files in these locations:**
-- `CLAUDE.md` (project root)
-- `claude-docs/` (entire directory)
-- `docs/adrs/` (entire directory)
-- `.serena/` (entire directory)
-- `.claude/` (entire directory)
-- `.claude-bootstrap/` (entire directory)
+Execute the following checks:
 
-**NEVER modify files outside this safe list** (source code, package.json, etc.)
+1. **Check environment state**: Look for `.state/environment-state.json` in this bootstrap repo
+2. **Check project state**: Look for `.claude-bootstrap/manifest.json` in the target project
+3. **Determine recommended mode** based on the decision matrix below
 
-### Autopilot Mode
+### Decision Matrix
 
-This bootstrap runs in **full autopilot mode**. Execute all steps without waiting for confirmation.
-
-**Defaults for all decisions:**
-- Existing CLAUDE.md → **Merge** (preserve user sections, update generated sections)
-- Existing docs → **Skip** (don't overwrite customized guides)
-- Missing detections → **Use sensible defaults** or leave placeholder
-- Ambiguous language → **Pick the most prominent one** (most files)
-- ADRs → **Always create** the structure
-
-**Only stop for:**
-- Actual errors that prevent continuation
-- File system permission failures
-
-The user can enable Claude's "ask before edits" mode if they want manual control.
+| Environment Setup | Project Bootstrap | Recommended Mode |
+|-------------------|-------------------|------------------|
+| ✗ Not done        | ✗ Not done        | Both (first-time) |
+| ✗ Not done        | ✓ Done            | Environment only |
+| ✓ Done            | ✗ Not done        | Project only     |
+| ✓ Done            | ✓ Done            | Update/verify    |
 
 ---
 
-## Progress Tracking
+## Mode Selection
 
-Progress is tracked in `.claude-bootstrap/manifest.json` for resumption if interrupted.
+Based on detection, present the recommended mode to the user.
 
-If resuming an interrupted bootstrap:
-1. Check `.claude-bootstrap/manifest.json` for completed steps
-2. Skip completed steps, resume from where left off
-3. Re-run analysis if project files changed significantly
+**Available modes:**
+- **environment** - Set up global tools (Serena, MCP servers, agents)
+- **project** - Bootstrap this project with praxis files
+- **both** - Run environment setup, then project bootstrap (recommended for first-time)
+- **verify** - Check what's installed without making changes
+- **help** - Explain the modes and what they do
+
+**Autopilot behavior:**
+- If mode is clear (e.g., "both" for first-time), proceed automatically
+- Show what will happen before executing
+- Use a brief transparency message (no countdown needed - just inform and proceed)
 
 ---
 
 ## Execution Flow
 
-Follow these procedures in order. Each procedure file contains detailed steps.
+### Mode: Environment Setup
 
-### Phase 1: Analysis
-1. Read [procedures/00-analyze-project.md](procedures/00-analyze-project.md)
-2. Execute the analysis and gather project information
-3. Save results to `.claude-bootstrap/analysis.json`
-4. Present findings to user and get confirmation to proceed
+1. Inform user: "Setting up global environment tools..."
+2. Proceed to [environment/CLAUDE.md](environment/CLAUDE.md)
+3. Follow environment setup orchestrator
 
-### Phase 2: Tool Installation
-5. Read [procedures/01-install-serena.md](procedures/01-install-serena.md)
-6. Install and configure Serena MCP (use Serena's onboarding tool)
-7. Read [procedures/01b-install-mcp-servers.md](procedures/01b-install-mcp-servers.md)
-8. Install Context7 and Sequential Thinking MCP servers
-9. Read [procedures/02-install-agents.md](procedures/02-install-agents.md)
-10. Direct user to agent installation repo
+### Mode: Project Bootstrap
 
-### Phase 3: Content Generation
-11. Read [procedures/03-generate-claude-md.md](procedures/03-generate-claude-md.md)
-12. Generate customized CLAUDE.md using analysis data and templates
-13. Read [procedures/04-generate-docs.md](procedures/04-generate-docs.md)
-14. Create claude-docs/ with relevant guides
-15. Read [procedures/05-setup-adrs.md](procedures/05-setup-adrs.md)
-16. Initialize ADR structure
+1. Check if environment setup is complete (read `.state/environment-state.json`)
+2. If environment not ready, warn: "Environment setup not detected. Some features may be unavailable. Continue anyway?"
+3. Proceed to [project/CLAUDE.md](project/CLAUDE.md)
+4. Follow project bootstrap orchestrator
 
-### Phase 4: Verification
-17. Read [procedures/06-verify-installation.md](procedures/06-verify-installation.md)
-18. Verify all files were created correctly
-19. Test Serena connectivity (if installed)
-20. Present summary and next steps to user
+### Mode: Both
 
-## Safety Rules
+1. Inform user: "Running full bootstrap (environment + project)..."
+2. Execute environment setup first:
+   - Proceed to [environment/CLAUDE.md](environment/CLAUDE.md)
+   - Wait for completion (blocking)
+   - Check environment state
+3. Execute project bootstrap:
+   - Proceed to [project/CLAUDE.md](project/CLAUDE.md)
+   - Uses environment state from previous phase
+   - Enables optimizations if Serena available
+4. Present combined summary report
 
-**NEVER** (these require explicit user request):
-- Modify source code files
-- Change git configuration
-- Install runtime dependencies in their project
-- Modify CI/CD pipelines
-- Delete existing files
+### Mode: Verify
 
-**ALWAYS safe** (do without asking):
-- Read any file for analysis
-- Create/modify files in safe list
-- Install Serena MCP globally
-- Inform user about agents (non-blocking)
+1. Read `.state/environment-state.json` (if exists)
+2. Read `.claude-bootstrap/manifest.json` in target project (if exists)
+3. Test connectivity:
+   - Try using Serena tools (if state says installed)
+   - Check `.claude/settings.local.json` for MCP servers
+4. Display status report:
+   ```
+   Environment Status:
+   ✓ Serena MCP v1.2.3 (working)
+   ✓ Context7 MCP (configured)
+   ✓ Sequential Thinking MCP (configured)
+
+   Project Status:
+   ✓ CLAUDE.md (exists)
+   ✓ claude-docs/ (6 files)
+   ✓ docs/adrs/ (initialized)
+   ✓ .serena/ (configured)
+
+   Recommendations:
+   - None, everything looks good!
+   ```
+5. Exit without making changes
+
+### Mode: Help
+
+Display explanation of modes:
+
+```
+Claude Praxis bootstrap has two modes:
+
+**Environment Setup** (once per machine)
+- Installs tools globally (Serena MCP, Context7, Sequential Thinking)
+- Modifies ~/.claude/settings.local.json
+- Takes ~2 minutes
+- Run when: New machine, or want to update tools
+
+**Project Bootstrap** (once per project)
+- Creates CLAUDE.md and docs for THIS project
+- Modifies only this project directory
+- Takes ~1 minute
+- Run when: New project, or want to update project files
+
+**Both Mode** (recommended for first time)
+- Runs environment setup, then project bootstrap
+- One command, complete setup
+- Takes ~3 minutes
+
+Which mode do you need?
+```
+
+---
+
+## Error Handling
+
+### Environment Setup Failures
+
+Environment failures are **non-blocking**:
+- Log the error
+- Record in environment state
+- Continue to project bootstrap (if in "both" mode)
+- Use file-based fallbacks where Serena would have been used
+
+Example message:
+```
+⚠ Serena MCP installation failed (npm error)
+
+This is optional - continuing with project bootstrap.
+You can retry later with: "run environment setup"
+
+Project bootstrap will use file-based analysis instead.
+```
+
+### Project Bootstrap Failures
+
+Project failures are **blocking**:
+- Stop and report the issue
+- Provide clear recovery steps
+- Save progress to manifest
+- Allow resume
+
+Example message:
+```
+✗ Cannot write to project directory (permission denied)
+
+Please check:
+- You have write permissions
+- Directory is not read-only
+- No file locks on CLAUDE.md
+
+Fix the issue and run again - progress will resume from where it stopped.
+```
+
+---
 
 ## State Management
 
-All bootstrap state is stored in `.claude-bootstrap/`:
+### Environment State
 
-| File | Purpose |
-|------|---------|
-| `analysis.json` | Project analysis results (language, frameworks, structure) |
-| `manifest.json` | Bootstrap progress and completion status |
+Location: `bootstrap/.state/environment-state.json`
 
-This enables:
-- Template processing with consistent data
-- Safe re-runs (skip completed steps)
-- Verification of what was installed
+This tracks global tool installations across all projects.
+
+Schema:
+```json
+{
+  "environment_setup_version": "1.0.0",
+  "completed_at": "2025-12-14T10:30:00Z",
+  "components": {
+    "serena_mcp": {
+      "installed": true,
+      "version": "1.2.3",
+      "installed_at": "2025-12-14T10:15:00Z"
+    },
+    "context7_mcp": {
+      "installed": true,
+      "installed_at": "2025-12-14T10:20:00Z"
+    },
+    "sequential_thinking_mcp": {
+      "installed": true,
+      "installed_at": "2025-12-14T10:20:00Z"
+    },
+    "agents_notified": true
+  },
+  "last_updated": "2025-12-14T10:30:00Z"
+}
+```
+
+### Project State
+
+Location: `.claude-bootstrap/manifest.json` (in target project)
+
+This tracks project-specific bootstrap progress.
+
+Schema:
+```json
+{
+  "bootstrap_version": "1.0.0",
+  "started_at": "2025-12-14T10:35:00Z",
+  "completed_at": "2025-12-14T10:37:00Z",
+  "steps_completed": ["analyze", "generate-claude-md", "generate-docs", "setup-adrs"],
+  "steps_skipped": [],
+  "project_type": "TypeScript Application",
+  "environment_setup_available": true,
+  "serena_available": true
+}
+```
+
+---
 
 ## Quick Reference
 
-| What | Where |
-|------|-------|
-| Project analysis | [procedures/00-analyze-project.md](procedures/00-analyze-project.md) |
-| Serena installation | [procedures/01-install-serena.md](procedures/01-install-serena.md) |
-| MCP servers (Context7, Sequential Thinking) | [procedures/01b-install-mcp-servers.md](procedures/01b-install-mcp-servers.md) |
-| Agent installation | [procedures/02-install-agents.md](procedures/02-install-agents.md) |
-| CLAUDE.md generation | [procedures/03-generate-claude-md.md](procedures/03-generate-claude-md.md) |
-| Docs generation | [procedures/04-generate-docs.md](procedures/04-generate-docs.md) |
-| ADR setup | [procedures/05-setup-adrs.md](procedures/05-setup-adrs.md) |
-| Verification | [procedures/06-verify-installation.md](procedures/06-verify-installation.md) |
-| CLAUDE.md template | [templates/CLAUDE.md.template](templates/CLAUDE.md.template) |
-| Guide templates | [templates/guides/](templates/guides/) |
-| Background principles | [reference/guardrail-principles.md](reference/guardrail-principles.md) |
+| Mode | When to Use | What It Does |
+|------|-------------|--------------|
+| **both** | First-time bootstrap on new machine | Installs global tools + sets up this project |
+| **environment** | New machine, already have project files | Installs global tools only |
+| **project** | Have global tools, need to bootstrap new project | Sets up this project only |
+| **verify** | Want to check what's installed | Shows status without changes |
+| **help** | Confused about modes | Explains the modes |
+
+---
 
 ## Begin
 
-Start by reading and executing [procedures/00-analyze-project.md](procedures/00-analyze-project.md).
+**Default action for autopilot**: If this is clearly a first-time bootstrap (no environment state, no project state), automatically run "both" mode.
+
+**Execution steps:**
+1. Perform automatic mode detection
+2. Select appropriate mode
+3. Inform user what will happen
+4. Execute the selected mode
+5. Present summary report
+
+Start by checking for environment and project state, then proceed with the appropriate mode.

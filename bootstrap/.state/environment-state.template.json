@@ -1,0 +1,46 @@
+{
+  "_comment": "This is a template showing the schema for environment-state.json",
+  "_usage": "This file is created automatically during environment setup",
+  "_location": "bootstrap/.state/environment-state.json",
+
+  "environment_setup_version": "1.0.0",
+  "completed_at": "2025-12-14T10:30:00Z",
+
+  "components": {
+    "serena_mcp": {
+      "installed": true,
+      "version": "1.2.3",
+      "installed_at": "2025-12-14T10:15:00Z",
+      "global_config_path": "~/.claude/settings.local.json",
+      "skip_reason": null,
+      "error": null
+    },
+    "context7_mcp": {
+      "installed": true,
+      "installed_at": "2025-12-14T10:20:00Z",
+      "skip_reason": null,
+      "error": null
+    },
+    "sequential_thinking_mcp": {
+      "installed": true,
+      "installed_at": "2025-12-14T10:20:00Z",
+      "skip_reason": null,
+      "error": null
+    },
+    "agents_notified": true
+  },
+
+  "skip_reasons": {
+    "_comment": "Deprecated - moved to individual components",
+    "_kept_for_backward_compatibility": true
+  },
+
+  "last_updated": "2025-12-14T10:30:00Z",
+
+  "user_preferences": {
+    "_comment": "Optional user preferences for future enhancements",
+    "skip_agents": false,
+    "tech_stacks": ["typescript", "react"],
+    "preferred_docs_location": "claude-docs"
+  }
+}
