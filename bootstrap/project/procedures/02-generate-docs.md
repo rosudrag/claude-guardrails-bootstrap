@@ -147,6 +147,7 @@ Create these files in `ai-docs/`:
 | `research-workflow.md` | When/how to investigate unknowns | [templates/guides/research-workflow.md](../templates/guides/research-workflow.md) |
 | `iterative-problem-solving.md` | Systematic debugging methodology | [templates/guides/iterative-problem-solving.md](../templates/guides/iterative-problem-solving.md) |
 | `multi-approach-validation.md` | Evaluating multiple solutions | [templates/guides/multi-approach-validation.md](../templates/guides/multi-approach-validation.md) |
+| `verification.md` | Pre-PR verification checklist | [templates/guides/verification.md](../templates/guides/verification.md) |
 
 **Customization**: Adapt examples for the detected language/framework from analysis.json.
 
@@ -170,6 +171,9 @@ Supporting guides for AI-assisted development.
 - [Iterative Problem Solving](iterative-problem-solving.md) - Systematic debugging methodology
 - [Multi-Approach Validation](multi-approach-validation.md) - Evaluating multiple solutions
 - [Research Workflow](research-workflow.md) - How to investigate unknowns
+
+### Quality
+- [Verification](verification.md) - Pre-PR verification checklist
 
 ## Adding Custom Guides
 
@@ -290,6 +294,7 @@ Before proceeding to the next step, verify based on path taken:
 - [ ] `ai-docs/` directory exists
 - [ ] Core guides present: `tdd-enforcement.md`, `code-quality.md`, `security.md`
 - [ ] Problem-solving guides present: `iterative-problem-solving.md`, `multi-approach-validation.md`, `research-workflow.md`
+- [ ] Quality guide present: `verification.md`
 - [ ] `ai-docs/README.md` exists
 - [ ] Manifest updated with docs generation status
 

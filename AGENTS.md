@@ -32,6 +32,7 @@ ai-praxis/
 ├── AGENTS.md                    # You are here (meta instructions)
 ├── CLAUDE.md                    # Forwarding file for Claude Code
 ├── README.md                    # Human documentation
+├── examples/                    # Real-world AGENTS.md examples by stack
 ├── tasks/                       # Backlog of improvement ideas (gitignored)
 └── bootstrap/
     ├── AGENTS.md                # Entry point router (mode selection)
@@ -50,15 +51,24 @@ ai-praxis/
     │   │   ├── 00-analyze-project.md
     │   │   ├── 01-generate-agents-md.md
     │   │   ├── 02-generate-docs.md
-    │   │   └── 03-setup-adrs.md
+    │   │   ├── 03-setup-adrs.md
+    │   │   └── 04-setup-contexts-commands-agents.md
     │   └── verification.md      # Post-bootstrap verification
     ├── templates/               # Shared templates for both modes
     │   ├── AGENTS.md.template
     │   ├── adr-template.md
-    │   └── guides/              # Guide templates (TDD, code quality, etc.)
+    │   ├── agents/              # Agent definition templates
+    │   ├── commands/            # Slash command templates
+    │   ├── contexts/            # Behavior mode templates (dev, review, research)
+    │   ├── guides/              # Guide templates (TDD, code quality, etc.)
+    │   ├── hooks/               # Hook script templates (Claude Code)
+    │   ├── hooks.json.template  # Hook config template
+    │   └── rules/               # Rule templates (common + language-specific)
+    │       └── common/          # Language-agnostic rules
     └── reference/               # Shared reference docs
         ├── guardrail-principles.md
-        └── serena-best-practices.md
+        ├── serena-best-practices.md
+        └── token-optimization.md
 ```
 
 ## Key Design Decisions

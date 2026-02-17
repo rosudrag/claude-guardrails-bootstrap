@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"const fs=require('fs');let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{const i=JSON.parse(d);const p=i.tool_input?.file_path||'';if(/\\.(md|txt)$/.test(p)&&!/(README|CLAUDE|AGENTS|CONTRIBUTING|CHANGELOG)\\.md$/.test(p)&&!/ai-docs\\//.test(p)&&!/docs\\//.test(p)){console.error('[Hook] BLOCKED: Unnecessary documentation file creation');console.error('[Hook] File: '+p);console.error('[Hook] Use README.md or ai-docs/ for documentation');process.exit(2)}}catch{}console.log(d)})\""
+          }
+        ],
+        "description": "Block creation of random .md files outside docs directories"
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{const i=JSON.parse(d);const cmd=i.tool_input?.command||'';if(/git push/.test(cmd)){console.error('[Hook] Reminder: review changes before pushing');console.error('[Hook] Consider running verification first')}}catch{}console.log(d)})\""
+          }
+        ],
+        "description": "Reminder before git push to review changes"
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "{{post_edit_format_command}}"
+          }
+        ],
+        "description": "Auto-format files after edits"
+      },
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "{{post_edit_debug_warn_command}}"
+          }
+        ],
+        "description": "Warn about debug statements after edits"
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "{{stop_debug_check_command}}"
+          }
+        ],
+        "description": "Check modified files for debug statements after each response"
+      }
+    ]
+  }
+}

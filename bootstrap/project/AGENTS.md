@@ -160,7 +160,25 @@ Execute [procedures/03-setup-adrs.md](procedures/03-setup-adrs.md)
 - ADR template
 - Initial ADR (if created)
 
-### 5. Project-Specific Serena Setup [AUTO]
+### 5. Setup Contexts, Commands, and Agents [AUTO]
+
+Execute [procedures/04-setup-contexts-commands-agents.md](procedures/04-setup-contexts-commands-agents.md)
+
+**Key behavior:**
+- Create context mode files (dev, review, research) in docs directory
+- Create slash command definitions in tool-appropriate location
+- Create agent definitions in tool-appropriate location
+- Customize all templates with project-specific values from analysis
+- Update AGENTS.md with Modes, Commands, and Agents sections
+- Record in manifest: `steps_completed: [..., "setup-contexts-commands-agents"]`
+
+**Expected output:**
+- Context mode files (3 files)
+- Command definitions (5 files)
+- Agent definitions (5 files)
+- AGENTS.md updated with new sections
+
+### 6. Project-Specific Serena Setup [AUTO]
 
 **If Serena is installed** (check environment state):
 
@@ -174,7 +192,7 @@ Execute [procedures/03-setup-adrs.md](procedures/03-setup-adrs.md)
 - Record in manifest: `serena_available: false`
 - Note: User can run Serena onboarding later if they install it
 
-### 6. Save Manifest [AUTO]
+### 7. Save Manifest [AUTO]
 
 Write `.ai-bootstrap/manifest.json` with completion status:
 
@@ -183,7 +201,7 @@ Write `.ai-bootstrap/manifest.json` with completion status:
   "bootstrap_version": "1.0.0",
   "started_at": "2025-12-14T10:35:00Z",
   "completed_at": "2025-12-14T10:37:00Z",
-  "steps_completed": ["analyze", "generate-agents-md", "generate-docs", "setup-adrs"],
+  "steps_completed": ["analyze", "generate-agents-md", "generate-docs", "setup-adrs", "setup-contexts-commands-agents"],
   "steps_skipped": [],
   "project_type": "TypeScript Application",
   "environment_setup_available": true,
@@ -191,7 +209,7 @@ Write `.ai-bootstrap/manifest.json` with completion status:
 }
 ```
 
-### 7. Verification [AUTO]
+### 8. Verification [AUTO]
 
 Execute [verification.md](verification.md):
 
@@ -201,62 +219,71 @@ Execute [verification.md](verification.md):
 - CLAUDE.md forwards correctly
 - Guides were created/updated
 - ADR structure is valid
+- Contexts, commands, and agents are in correct locations
 - Serena connectivity (if available)
 
 **Report:**
 ```
 Verification complete:
-✓ AGENTS.md (80 lines)
+✓ AGENTS.md (120 lines)
 ✓ CLAUDE.md (forwarding file)
-✓ ai-docs/ (6 files)
+✓ ai-docs/ (6 guides + 3 contexts)
+✓ .claude/commands/ (5 commands)
+✓ .claude/agents/ (5 agents)
 ✓ docs/adrs/ (structure initialized)
 ✓ .serena/ (configured and working)
 
 All checks passed!
 ```
 
-### 8. Summary Report [AUTO]
+### 9. Summary Report [AUTO]
 
 Display summary:
 
 ```
 Project bootstrap complete!
 
-✓ AGENTS.md - Project instructions (80 lines)
+✓ AGENTS.md - Project instructions (120 lines)
 ✓ CLAUDE.md - Forwarding file for Claude Code
 ✓ ai-docs/ - Methodology guides (6 files)
-  - tdd-enforcement.md
-  - code-quality.md
-  - iterative-problem-solving.md
-  - security.md
-  - research-workflow.md
-  - multi-approach-validation.md
+  - tdd-enforcement.md, code-quality.md, security.md
+  - iterative-problem-solving.md, multi-approach-validation.md, research-workflow.md
+  - verification.md
+✓ ai-docs/contexts/ - Behavior modes (3 files)
+  - dev.md, review.md, research.md
+✓ .claude/commands/ - Workflow commands (5 commands)
+  - /plan, /review, /tdd, /verify, /debug
+✓ .claude/agents/ - Specialized agents (5 agents)
+  - planner, reviewer, tdd-guide, security-reviewer, architect
 ✓ docs/adrs/ - Architecture decision records
 ✓ .serena/ - Semantic code navigation
 
 Next steps:
 1. Review and customize AGENTS.md
-2. Create your first ADR for existing decisions
-3. Try asking your AI assistant about your codebase
+2. Try /plan to plan your next feature
+3. Try /review to review recent changes
+4. Create your first ADR for existing decisions
 ```
 
 If Serena was not available:
 ```
 Project bootstrap complete!
 
-✓ AGENTS.md - Project instructions (80 lines)
+✓ AGENTS.md - Project instructions (120 lines)
 ✓ CLAUDE.md - Forwarding file for Claude Code
-✓ ai-docs/ - Methodology guides (6 files)
+✓ ai-docs/ - Methodology guides + contexts
+✓ .claude/commands/ - Workflow commands (5 commands)
+✓ .claude/agents/ - Specialized agents (5 agents)
 ✓ docs/adrs/ - Architecture decision records
 ⊗ .serena/ - Not configured (Serena not installed)
 
 Note: Some optimizations unavailable (Serena not installed).
-To enable Serena, run: "setup environment"
+Agent definitions will work but without Serena's semantic tools.
 
 Next steps:
 1. Review and customize AGENTS.md
-2. Create your first ADR for existing decisions
-3. Start using the methodology guides
+2. Try /plan to plan your next feature
+3. Try /review to review recent changes
 ```
 
 ---
@@ -408,6 +435,7 @@ Read to determine available tools, never modified by project bootstrap.
 | Generate AGENTS.md | [procedures/01-generate-agents-md.md](procedures/01-generate-agents-md.md) | Create project instructions | Analysis |
 | Generate Docs | [procedures/02-generate-docs.md](procedures/02-generate-docs.md) | Create methodology guides | Analysis |
 | Setup ADRs | [procedures/03-setup-adrs.md](procedures/03-setup-adrs.md) | Initialize ADR structure | None |
+| Setup Contexts/Commands/Agents | [procedures/04-setup-contexts-commands-agents.md](procedures/04-setup-contexts-commands-agents.md) | Workflow automation | Analysis |
 | Verification | [verification.md](verification.md) | Verify installation | All above |
 
 ---

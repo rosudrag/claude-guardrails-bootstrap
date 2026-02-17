@@ -36,6 +36,7 @@
 | Research unknown behavior | [research-workflow.md]({{docs_path}}/research-workflow.md) |
 | Ensure code quality | [code-quality.md]({{docs_path}}/code-quality.md) |
 | Secure sensitive data | [security.md]({{docs_path}}/security.md) |
+| Verify before PR | [verification.md]({{docs_path}}/verification.md) |
 {{#if has_adrs}}| Check ADR decisions | [docs/adrs/](./docs/adrs/README.md) |
 {{/if}}
 
@@ -63,6 +64,34 @@
 <!-- Describe your architecture in one line, e.g.: -->
 <!-- EntryPoint → Service → Repository → Database -->
 <!-- ARCHITECTURE_END -->
+
+## Modes
+
+| Mode | When to use | Context |
+|------|-------------|---------|
+| Development | Writing new code or fixing bugs | [dev.md]({{docs_path}}/contexts/dev.md) |
+| Review | Reviewing PRs or code changes | [review.md]({{docs_path}}/contexts/review.md) |
+| Research | Investigating unknowns or planning | [research.md]({{docs_path}}/contexts/research.md) |
+
+## Commands
+
+| Command | Purpose |
+|---------|---------|
+| `/plan` | Plan a feature before implementing |
+| `/review` | Review recent code changes |
+| `/tdd` | Implement with test-driven development |
+| `/verify` | Run pre-PR verification checks |
+| `/debug` | Systematic debugging workflow |
+
+## Agents
+
+| Agent | Role | Modifies Code? |
+|-------|------|----------------|
+| planner | Feature planning and task breakdown | No (read-only) |
+| reviewer | Code review and quality analysis | No (read-only) |
+| tdd-guide | Test-driven development coach | Yes |
+| security-reviewer | Security vulnerability scanning | No (read-only) |
+| architect | System design and trade-off analysis | No (read-only) |
 
 ## Commits
 
