@@ -120,6 +120,11 @@ Add a commands section:
 | `/tdd` | Implement with test-driven development |
 | `/verify` | Run pre-PR verification checks |
 | `/debug` | Systematic debugging workflow |
+| `/build-fix` | Fix build errors one at a time |
+| `/refactor-clean` | Remove dead code safely |
+| `/test-coverage` | Analyze and fill coverage gaps |
+| `/orchestrate` | Chain agents for complex workflows |
+| `/update-docs` | Sync documentation with code |
 ```
 
 ---
