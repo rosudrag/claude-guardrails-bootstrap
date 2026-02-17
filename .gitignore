@@ -9,6 +9,10 @@
 .DS_Store
 Thumbs.db
 
+# Working directories
+/tmp/
+/tasks/
+
 # Misc
 *.log
 bootstrap/.state/environment-state.json
