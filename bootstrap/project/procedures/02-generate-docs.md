@@ -148,6 +148,13 @@ Create these files in `ai-docs/`:
 | `iterative-problem-solving.md` | Systematic debugging methodology | [templates/guides/iterative-problem-solving.md](../templates/guides/iterative-problem-solving.md) |
 | `multi-approach-validation.md` | Evaluating multiple solutions | [templates/guides/multi-approach-validation.md](../templates/guides/multi-approach-validation.md) |
 | `verification.md` | Pre-PR verification checklist | [templates/guides/verification.md](../templates/guides/verification.md) |
+| `api-design.md` | REST API design patterns | [templates/guides/api-design.md](../templates/guides/api-design.md) |
+| `database-patterns.md` | Database query and schema patterns | [templates/guides/database-patterns.md](../templates/guides/database-patterns.md) |
+| `docker-deployment.md` | Container and deployment patterns | [templates/guides/docker-deployment.md](../templates/guides/docker-deployment.md) |
+| `e2e-testing.md` | End-to-end testing methodology | [templates/guides/e2e-testing.md](../templates/guides/e2e-testing.md) |
+| `session-learning.md` | Session persistence and learning | [templates/guides/session-learning.md](../templates/guides/session-learning.md) |
+
+**Language-specific patterns**: Conditionally include `patterns-{{language}}.md` guides (e.g., `patterns-typescript.md`, `patterns-python.md`, `patterns-csharp.md`) based on the primary language detected in `analysis.json`. Only generate pattern guides for languages actually used in the project.
 
 **Customization**: Adapt examples for the detected language/framework from analysis.json.
 

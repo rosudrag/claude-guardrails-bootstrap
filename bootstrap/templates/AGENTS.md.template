@@ -37,6 +37,12 @@
 | Ensure code quality | [code-quality.md]({{docs_path}}/code-quality.md) |
 | Secure sensitive data | [security.md]({{docs_path}}/security.md) |
 | Verify before PR | [verification.md]({{docs_path}}/verification.md) |
+| Follow language patterns | [patterns-{{language}}.md]({{docs_path}}/patterns-{{language}}.md) |
+| Design REST APIs | [api-design.md]({{docs_path}}/api-design.md) |
+| Write database queries | [database-patterns.md]({{docs_path}}/database-patterns.md) |
+| Containerize / deploy | [docker-deployment.md]({{docs_path}}/docker-deployment.md) |
+| Write E2E tests | [e2e-testing.md]({{docs_path}}/e2e-testing.md) |
+| Session learning notes | [session-learning.md]({{docs_path}}/session-learning.md) |
 {{#if has_adrs}}| Check ADR decisions | [docs/adrs/](./docs/adrs/README.md) |
 {{/if}}
 
@@ -82,6 +88,11 @@
 | `/tdd` | Implement with test-driven development |
 | `/verify` | Run pre-PR verification checks |
 | `/debug` | Systematic debugging workflow |
+| `/build-fix` | Fix build errors one at a time |
+| `/refactor-clean` | Remove dead code safely |
+| `/test-coverage` | Analyze and fill coverage gaps |
+| `/orchestrate` | Chain agents for complex workflows |
+| `/update-docs` | Sync documentation with code |
 
 ## Agents
 
@@ -92,6 +103,9 @@
 | tdd-guide | Test-driven development coach | Yes |
 | security-reviewer | Security vulnerability scanning | No (read-only) |
 | architect | System design and trade-off analysis | No (read-only) |
+| build-error-resolver | Fix build errors iteratively | Yes |
+| refactor-cleaner | Dead code removal and cleanup | Yes |
+| doc-updater | Documentation drift detection and fixes | Yes (docs only) |
 
 ## Commits
 

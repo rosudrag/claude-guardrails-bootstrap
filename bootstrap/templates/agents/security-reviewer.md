@@ -1,5 +1,6 @@
 ---
 name: security-reviewer
+model: sonnet
 description: Security analysis specialist. Scans code for vulnerabilities following OWASP guidelines.
 tools:
   - Read
@@ -110,3 +111,14 @@ innerHTML|dangerouslySetInnerHTML|v-html|{!! !!}
 - Classify severity honestly — don't inflate or minimize.
 - Always suggest a concrete fix, not just "fix this."
 - Note the scope of your review — what was NOT checked.
+
+## When NOT to Use
+
+- **General code quality** — For style, patterns, testing, and overall quality review, hand off to the **reviewer** agent.
+- **Fixing vulnerabilities** — This agent reports findings only. Hand off to the **tdd-guide** agent or developer for implementing fixes.
+- **Architecture design** — For system structure and design decisions, hand off to the **architect** agent.
+- **Dependency updates** — For routine version bumps and dependency management, this agent only flags risks; use standard tooling for updates.
+
+## Related Guides
+
+- [Security Guide]({{docs_path}}/security.md)

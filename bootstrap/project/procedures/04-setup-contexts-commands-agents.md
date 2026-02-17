@@ -91,6 +91,11 @@ From `templates/commands/`, create:
 | `/tdd` | `tdd.md` | Test-driven development workflow |
 | `/verify` | `verify.md` | Pre-PR verification loop |
 | `/debug` | `debug.md` | Systematic debugging methodology |
+| `/build-fix` | `build-fix.md` | Fix build errors iteratively |
+| `/refactor-clean` | `refactor-clean.md` | Remove dead code safely |
+| `/test-coverage` | `test-coverage.md` | Analyze and fill test coverage gaps |
+| `/orchestrate` | `orchestrate.md` | Chain agents for complex workflows |
+| `/update-docs` | `update-docs.md` | Sync documentation with code |
 
 ### 2c. Customize Commands [AUTO]
 
@@ -141,6 +146,9 @@ Install agents based on project needs:
 | `tdd-guide.md` | Yes | If project has no tests and user opts out |
 | `security-reviewer.md` | Yes | Never |
 | `architect.md` | If project has >10 source files | Very small projects |
+| `build-error-resolver.md` | If project has build step | Projects without build step |
+| `refactor-cleaner.md` | If project has >20 source files | Very small projects |
+| `doc-updater.md` | If project has documentation | No docs to maintain |
 
 ### 3c. Customize Agent Definitions [AUTO]
 
@@ -164,6 +172,9 @@ Add an agents section:
 | tdd-guide | Test-driven development coach | Yes |
 | security-reviewer | Security vulnerability scanning | No (read-only) |
 | architect | System design and trade-off analysis | No (read-only) |
+| build-error-resolver | Fix build errors iteratively | Yes |
+| refactor-cleaner | Dead code removal and cleanup | Yes |
+| doc-updater | Documentation drift detection and fixes | Yes (docs only) |
 ```
 
 ---
@@ -176,8 +187,8 @@ Record completion in `.ai-bootstrap/manifest.json`:
 {
   "steps_completed": [..., "setup-contexts-commands-agents"],
   "contexts_created": ["dev.md", "review.md", "research.md"],
-  "commands_created": ["plan.md", "review.md", "tdd.md", "verify.md", "debug.md"],
-  "agents_created": ["planner.md", "reviewer.md", "tdd-guide.md", "security-reviewer.md", "architect.md"],
+  "commands_created": ["plan.md", "review.md", "tdd.md", "verify.md", "debug.md", "build-fix.md", "refactor-clean.md", "test-coverage.md", "orchestrate.md", "update-docs.md"],
+  "agents_created": ["planner.md", "reviewer.md", "tdd-guide.md", "security-reviewer.md", "architect.md", "build-error-resolver.md", "refactor-cleaner.md", "doc-updater.md"],
   "commands_location": ".claude/commands/",
   "agents_location": ".claude/agents/"
 }

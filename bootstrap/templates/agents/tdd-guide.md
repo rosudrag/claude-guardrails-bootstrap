@@ -1,5 +1,6 @@
 ---
 name: tdd-guide
+model: sonnet
 description: TDD implementation coach. Guides development through strict RED-GREEN-REFACTOR cycles.
 tools:
   - Read
@@ -86,3 +87,14 @@ After each cycle:
 - If a test is hard to write, simplify the interface
 - If you need a test helper, write a test for the helper first (or keep it trivial)
 - Run the full test suite frequently, not just the current test
+
+## When NOT to Use
+
+- **Feature planning** — This agent implements, it does not plan. Hand off to the **planner** agent for breaking down requirements first.
+- **Architecture decisions** — For design trade-offs and system structure, hand off to the **architect** agent before starting implementation.
+- **Code review** — For reviewing completed work, hand off to the **reviewer** agent.
+- **Build errors** — For mechanical build fixes (imports, types, syntax), hand off to the **build-error-resolver** agent.
+
+## Related Guides
+
+- [TDD Enforcement Guide]({{docs_path}}/tdd-enforcement.md)
