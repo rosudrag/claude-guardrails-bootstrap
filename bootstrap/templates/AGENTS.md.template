@@ -21,10 +21,19 @@
 | **TDD Mandatory** | RED → GREEN → REFACTOR. Test first, always. |
 | **Research First** | Never guess behavior - verify before coding. |
 | **No Hardcoded Secrets** | Use config/env, never string literals. |
-
+{{#if non_trivial_project}}| **Agent-First** | Tasks >3 tool calls → delegate to subagents. Main thread coordinates only. See [guide]({{docs_path}}/guides/agent-first-architecture.md). |
+{{/if}}
 <!-- CUSTOM_RULES_START -->
 <!-- Add project-specific rules here -->
 <!-- CUSTOM_RULES_END -->
+
+{{#if non_trivial_project}}
+## Workflow
+
+For tasks requiring more than 3 tool calls or touching multiple files, delegate to a subagent from the Agents table below. The main thread plans and coordinates; agents do the work. Launch independent agents in parallel. Summarize results — don't echo raw agent output.
+
+For tasks spanning 3+ files or multiple modules, automatically use the orchestration workflow (`/orchestrate`) — don't wait for the user to request it. Inform the user you're orchestrating, then proceed.
+{{/if}}
 
 ## Doc Lookup
 
@@ -42,6 +51,9 @@
 | Write database queries | [database-patterns.md]({{docs_path}}/database-patterns.md) |
 | Containerize / deploy | [docker-deployment.md]({{docs_path}}/docker-deployment.md) |
 | Write E2E tests | [e2e-testing.md]({{docs_path}}/e2e-testing.md) |
+{{#if non_trivial_project}}| Delegate to sub-agents | [agent-first-architecture.md]({{docs_path}}/guides/agent-first-architecture.md) |
+| Follow delegation rules | [delegation.md]({{docs_path}}/rules/delegation.md) |
+{{/if}}
 | Session learning notes | [session-learning.md]({{docs_path}}/session-learning.md) |
 {{#if has_adrs}}| Check ADR decisions | [docs/adrs/](./docs/adrs/README.md) |
 {{/if}}

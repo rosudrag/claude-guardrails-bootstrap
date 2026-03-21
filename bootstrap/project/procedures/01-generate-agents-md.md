@@ -69,6 +69,7 @@ Replace placeholders with values from `analysis.json`:
 | `{{project_name}}` | Directory name or package.json/csproj | Directory name |
 | `{{docs_path}}` | `documentation_inventory.ai_docs_directory.path` or `ai-docs` | `./ai-docs` |
 | `{{has_adrs}}` | `true` if `docs/adrs/` exists | `false` |
+| `{{non_trivial_project}}` | `analysis.json` → `structure.non_trivial_project` | `false` |
 
 #### Discovery Variables
 
@@ -89,6 +90,10 @@ Replace placeholders with values from `analysis.json`:
 - `{{#if value}}...{{/if}}` - Include block if value is truthy
 - `{{#if value}}...{{else}}...{{/if}}` - Include else block if value is falsy
 - Remove all template tags after processing
+
+**Project-size conditionals**: The template uses `{{non_trivial_project}}` (>10 source files) to gate sections that only make sense for multi-file codebases:
+- **Agent-First critical rule** - omitted for small projects where delegation adds overhead
+- **Workflow section** - omitted for small projects (no subagents to coordinate)
 
 ### 4. Preserve User Customizations [AUTO]
 

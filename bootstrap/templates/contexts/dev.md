@@ -24,6 +24,13 @@ You are in **implementation mode**. Your priority is writing working code effici
 - Make small, incremental changes - commit frequently
 - If a change touches more than 3 files, pause and verify the approach
 
+## Delegation
+
+- For tasks involving more than 3 tool calls, delegate to a subagent
+- Launch independent agents in parallel
+- Keep the main thread focused on coordination and user interaction
+- See the Agents table in AGENTS.md for available specialists
+
 ## What NOT to do
 
 - Don't over-engineer or add speculative features
@@ -31,3 +38,5 @@ You are in **implementation mode**. Your priority is writing working code effici
 - Don't skip tests "to save time"
 - Don't introduce new patterns without justification
 - Don't leave debug statements (console.log, print, etc.)
+- Don't read 5+ files in the main context — delegate to an agent
+- Don't implement multi-file changes directly — delegate to an implementation agent

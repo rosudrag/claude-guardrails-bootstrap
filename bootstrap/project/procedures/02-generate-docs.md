@@ -71,6 +71,7 @@ Check `comparison_to_praxis.gaps_identified`. Common gaps:
 | `multi_approach_validation` | No approach comparison guide | Add new guide |
 | `code_quality` | No code quality principles | Add new guide |
 | `research_workflow` | No research methodology | Add new guide |
+| `agent_first_architecture` | No coordinator/worker delegation guide | Add new guide (if >10 source files) |
 
 ### A3. For Each Gap: Enhance or Create [AUTO]
 
@@ -153,8 +154,11 @@ Create these files in `ai-docs/`:
 | `docker-deployment.md` | Container and deployment patterns | [templates/guides/docker-deployment.md](../templates/guides/docker-deployment.md) |
 | `e2e-testing.md` | End-to-end testing methodology | [templates/guides/e2e-testing.md](../templates/guides/e2e-testing.md) |
 | `session-learning.md` | Session persistence and learning | [templates/guides/session-learning.md](../templates/guides/session-learning.md) |
+| `agent-first-architecture.md` | Context conservation via coordinator/worker delegation pattern | [templates/guides/agent-first-architecture.md](../templates/guides/agent-first-architecture.md) |
 
-**Language-specific patterns**: Conditionally include `patterns-{{language}}.md` guides (e.g., `patterns-typescript.md`, `patterns-python.md`, `patterns-csharp.md`) based on the primary language detected in `analysis.json`. Only generate pattern guides for languages actually used in the project.
+**Conditional guides**:
+- **Language-specific patterns**: Include `patterns-{{language}}.md` guides (e.g., `patterns-typescript.md`, `patterns-python.md`, `patterns-csharp.md`) based on the primary language detected in `analysis.json`. Only generate pattern guides for languages actually used in the project.
+- **Agent-first architecture**: Include `agent-first-architecture.md` for non-trivial projects (multi-file codebases, >10 source files). Skip for small single-file projects or scripts.
 
 **Customization**: Adapt examples for the detected language/framework from analysis.json.
 
@@ -178,6 +182,9 @@ Supporting guides for AI-assisted development.
 - [Iterative Problem Solving](iterative-problem-solving.md) - Systematic debugging methodology
 - [Multi-Approach Validation](multi-approach-validation.md) - Evaluating multiple solutions
 - [Research Workflow](research-workflow.md) - How to investigate unknowns
+
+### Architecture
+- [Agent-First Architecture](agent-first-architecture.md) - Context conservation via coordinator/worker delegation
 
 ### Quality
 - [Verification](verification.md) - Pre-PR verification checklist

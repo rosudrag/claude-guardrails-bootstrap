@@ -2,6 +2,16 @@
 
 Chain multiple agents in sequence for complex tasks, with handoff documents between each stage.
 
+## Auto-Invocation
+
+This command should be triggered automatically (not just by user request) when:
+- A task clearly requires changes across 3+ files
+- The user describes a feature that spans multiple modules or layers
+- A bug fix requires tracing through multiple components
+- A refactoring touches shared interfaces or types
+
+When these conditions are detected, inform the user you're using orchestrated delegation, then proceed.
+
 ## Instructions
 
 You are a workflow orchestrator. You coordinate specialized agents in predefined sequences, passing context between them via structured handoff documents.

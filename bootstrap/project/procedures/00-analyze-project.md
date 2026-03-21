@@ -75,7 +75,31 @@ Based on language, check for framework indicators:
 | `tests/`, `test/`, `__tests__/` | Has test structure |
 | `docs/` | Has documentation |
 
-### 5. Check Existing Guardrails [AUTO]
+### 5. Count Source Files [AUTO]
+
+Count source files to determine project scale. This drives the `non_trivial_project` flag used by AGENTS.md generation to conditionally include agent-first delegation rules.
+
+**Count files matching these extensions** (adapt to detected language):
+
+| Language | Extensions |
+|----------|------------|
+| C# | `*.cs` (exclude `obj/`, `bin/`) |
+| TypeScript | `*.ts`, `*.tsx` (exclude `node_modules/`, `dist/`) |
+| JavaScript | `*.js`, `*.jsx` (exclude `node_modules/`, `dist/`) |
+| Python | `*.py` (exclude `__pycache__/`, `.venv/`, `venv/`) |
+| Go | `*.go` (exclude `vendor/`) |
+| Rust | `*.rs` (exclude `target/`) |
+| Java | `*.java` (exclude `build/`, `target/`) |
+| Ruby | `*.rb` (exclude `vendor/`) |
+| PHP | `*.php` (exclude `vendor/`) |
+
+**Set flag:**
+- `source_file_count` = total number of source files found
+- `non_trivial_project` = `true` if `source_file_count > 10`, else `false`
+
+Store as: `structure.source_file_count` and `structure.non_trivial_project`
+
+### 6. Check Existing Guardrails [AUTO]
 
 Look for:
 - `AGENTS.md` - Already has AI assistant instructions
@@ -83,7 +107,7 @@ Look for:
 - `.serena/` - Already has Serena configured
 - `docs/adrs/` - Already has ADR structure
 
-### 5b. Discover Existing Documentation [AUTO] ⚠️ CRITICAL
+### 6b. Discover Existing Documentation [AUTO] ⚠️ CRITICAL
 
 **This step is essential.** Projects may already have AI documentation in non-standard locations. Skipping this leads to creating redundant docs that duplicate existing content.
 
@@ -175,7 +199,7 @@ Check these locations for existing AI/Claude documentation:
 
 Go beyond detection to **discover** project-specific information that eliminates USER_SECTION placeholders.
 
-### 6. Discover Project Purpose [AUTO]
+### 7. Discover Project Purpose [AUTO]
 
 Extract a description of what the project does. Check these sources in order:
 
@@ -212,7 +236,7 @@ If no explicit description, infer from:
 
 Store as: `discovery.project_purpose`
 
-### 7. Discover Build & Test Commands [AUTO]
+### 8. Discover Build & Test Commands [AUTO]
 
 Extract commands from project configuration files.
 
@@ -271,7 +295,7 @@ Parse for standard targets: `build`, `test`, `lint`, `dev`, `run`
 
 Store as: `discovery.commands`
 
-### 8. Discover Key Locations [AUTO]
+### 9. Discover Key Locations [AUTO]
 
 Find important directories and files for navigation.
 
@@ -335,7 +359,7 @@ contain main/entry symbols without reading full content.
 
 Store as: `discovery.key_paths`
 
-### 9. Discover Coding Conventions [AUTO]
+### 10. Discover Coding Conventions [AUTO]
 
 Detect code style from configuration files and code samples.
 
@@ -391,7 +415,7 @@ Use mcp__serena__search_for_pattern with "^import " to sample import organizatio
 
 Store as: `discovery.conventions`
 
-### 10. Discover Project Patterns [AUTO]
+### 11. Discover Project Patterns [AUTO]
 
 Analyze how the project handles common concerns.
 
@@ -454,7 +478,7 @@ Store as: `discovery.patterns`
 
 ## Phase B (continued): Save Results
 
-### 11. Save Analysis Results [AUTO]
+### 12. Save Analysis Results [AUTO]
 
 Write comprehensive analysis to `.ai-bootstrap/analysis.json`:
 
@@ -471,7 +495,9 @@ Write comprehensive analysis to `.ai-bootstrap/analysis.json`:
     "has_ci_cd": true,
     "has_docs": false,
     "is_containerized": true,
-    "is_monorepo": false
+    "is_monorepo": false,
+    "source_file_count": 47,
+    "non_trivial_project": true
   },
   "existing_guardrails": {
     "has_agents_md": false,
@@ -523,7 +549,7 @@ Write comprehensive analysis to `.ai-bootstrap/analysis.json`:
 }
 ```
 
-### 12. Generate Analysis Report
+### 13. Generate Analysis Report
 
 Format findings for user review:
 
@@ -539,6 +565,7 @@ Format findings for user review:
 - Has CI/CD: yes
 - Has docs: no
 - Containerized: yes
+- Source files: 47 (non-trivial project)
 
 ### Existing Guardrails
 - CLAUDE.md: missing
@@ -594,7 +621,7 @@ Format findings for user review:
 - [ ] Set up ADRs
 ```
 
-### 13. Show Analysis Summary [AUTO]
+### 14. Show Analysis Summary [AUTO]
 
 Display a brief summary of what was discovered (informational only, no confirmation needed):
 
@@ -608,7 +635,7 @@ Analysis complete:
 Proceeding with bootstrap...
 ```
 
-### 14. Initialize Manifest [AUTO]
+### 15. Initialize Manifest [AUTO]
 
 Create `.ai-bootstrap/manifest.json`:
 
@@ -707,6 +734,7 @@ Before proceeding to the next step, verify:
 - [ ] Language confidence recorded
 - [ ] Frameworks detected (or empty array)
 - [ ] Project structure classified
+- [ ] Source file count recorded and `non_trivial_project` flag set
 
 **Deep Discovery:**
 - [ ] Project purpose populated (discovered or user-provided)
@@ -737,3 +765,5 @@ The discovery section specifically enables:
 - **Accurate project description** without user editing
 - **Correct coding convention guidance** in generated docs
 - **Pattern-aware suggestions** in TDD and quality guides
+
+The `structure.non_trivial_project` flag is consumed by procedure 01 (AGENTS.md generation) as the `{{non_trivial_project}}` template variable to conditionally include agent-first delegation rules and workflow sections.

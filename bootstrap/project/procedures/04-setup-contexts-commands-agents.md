@@ -184,7 +184,43 @@ Add an agents section:
 
 ---
 
-## Step 4: Update Manifest [AUTO]
+## Step 4: Setup Rules [AUTO]
+
+Rules are tool-agnostic markdown files placed in the project's docs directory. They encode behavioral constraints the AI should follow.
+
+### 4a. Determine Rules Location [AUTO]
+
+Place rules at `{{docs_path}}/rules/` (e.g., `ai-docs/rules/`).
+
+### 4b. Select and Copy Rules [AUTO]
+
+From `templates/rules/common/`, install rules based on project characteristics:
+
+| Rule | Always Install | When to Skip |
+|------|---------------|--------------|
+| `coding-style.md` | Yes | Never |
+| `git-workflow.md` | Yes | Never |
+| `security.md` | Yes | Never |
+| `testing.md` | Yes | If project has no tests and user opts out |
+| `delegation.md` | If project has >10 source files | Small projects (same condition as agent-first guide) |
+
+### 4c. Customize Rules [AUTO]
+
+For each rule:
+- Adapt examples to the project's language/framework
+- Adjust conventions to match detected project patterns (e.g., commit style, branch naming)
+
+### 4d. Reference in AGENTS.md [AUTO]
+
+If rules are installed, add a rules reference to the Doc Lookup table in AGENTS.md:
+
+```markdown
+| Follow delegation rules | [delegation.md]({{docs_path}}/rules/delegation.md) |
+```
+
+---
+
+## Step 5: Update Manifest [AUTO]
 
 Record completion in `.ai-bootstrap/manifest.json`:
 
@@ -194,8 +230,10 @@ Record completion in `.ai-bootstrap/manifest.json`:
   "contexts_created": ["dev.md", "review.md", "research.md"],
   "commands_created": ["plan.md", "review.md", "tdd.md", "verify.md", "debug.md", "build-fix.md", "refactor-clean.md", "test-coverage.md", "orchestrate.md", "update-docs.md"],
   "agents_created": ["planner.md", "reviewer.md", "tdd-guide.md", "security-reviewer.md", "architect.md", "build-error-resolver.md", "refactor-cleaner.md", "doc-updater.md"],
+  "rules_created": ["coding-style.md", "git-workflow.md", "security.md", "testing.md", "delegation.md"],
   "commands_location": ".claude/commands/",
-  "agents_location": ".claude/agents/"
+  "agents_location": ".claude/agents/",
+  "rules_location": "ai-docs/rules/"
 }
 ```
 
@@ -218,6 +256,8 @@ Record completion in `.ai-bootstrap/manifest.json`:
 - [ ] Command placeholders (test, build, lint) are filled in
 - [ ] Agents are in the correct tool-specific directory
 - [ ] Agent tool lists match available tools (Serena included/excluded correctly)
+- [ ] Rules are in docs directory and customized for project
+- [ ] `delegation.md` included only for non-trivial projects (>10 source files)
 - [ ] AGENTS.md updated with Modes, Commands, and Agents sections
 - [ ] Manifest updated
 
